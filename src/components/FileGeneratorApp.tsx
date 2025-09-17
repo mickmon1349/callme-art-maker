@@ -81,7 +81,10 @@ export default function FileGeneratorApp() {
   const downloadFile = async (file: GeneratedFile) => {
     try {
       // 以 Blob 方式下載，避免內容型別/編碼錯誤導致「檔案格式錯誤」
-      const res = await fetch(file.url, { method: "GET", mode: "cors" });
+      const res = await fetch(file.url, {
+        method: "GET",
+        mode: "cors"
+      });
       if (!res.ok) throw new Error(`下載失敗: ${res.status}`);
       const blob = await res.blob();
 
@@ -89,7 +92,6 @@ export default function FileGeneratorApp() {
       const dispo = res.headers.get("content-disposition") || "";
       const match = dispo.match(/filename\*?=(?:UTF-8'')?["']?([^\"';]+)["']?/i);
       const filename = match?.[1] ? decodeURIComponent(match[1]) : file.name;
-
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
@@ -149,7 +151,7 @@ export default function FileGeneratorApp() {
                   </div>
                 </div>
 
-                <Button onClick={handleSubmit} disabled={!storeName.trim() || !selectedVersion || isGenerating} size="lg" className="w-full bg-gradient-primary text-primary-foreground shadow-button font-medium bg-teal-600 hover:bg-teal-500">
+                <Button onClick={handleSubmit} disabled={!storeName.trim() || !selectedVersion || isGenerating} size="lg" className="w-full bg-gradient-primary text-primary-foreground shadow-button font-medium bg-teal-700 hover:bg-teal-600">
                   {isGenerating ? <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                       生成中...
