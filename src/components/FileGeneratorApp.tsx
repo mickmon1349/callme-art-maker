@@ -47,8 +47,8 @@ export default function FileGeneratorApp() {
         version: selectedVersion
       };
 
-      // Mock API call - replace with actual webhook URL
-      const response = await fetch("https://xxxxxxxxxxxxxxxxx.com", {
+      // API call to webhook
+      const response = await fetch("https://grouper-brief-monthly.ngrok-free.app/webhook-test/callMeBack", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
