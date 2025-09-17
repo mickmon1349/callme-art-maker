@@ -78,15 +78,31 @@ export default function FileGeneratorApp() {
       setIsGenerating(false);
     }
   };
-  const downloadFile = (file: GeneratedFile) => {
-    // Create a temporary link element for download
-    const link = document.createElement('a');
-    link.href = file.url;
-    link.download = file.name;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    toast.success(`開始下載 ${file.name}`);
+  const downloadFile = async (file: GeneratedFile) => {
+    try {
+      // 以 Blob 方式下載，避免內容型別/編碼錯誤導致「檔案格式錯誤」
+      const res = await fetch(file.url, { method: "GET", mode: "cors" });
+      if (!res.ok) throw new Error(`下載失敗: ${res.status}`);
+      const blob = await res.blob();
+
+      // 從 Content-Disposition 取檔名（若有），否則用預設名稱
+      const dispo = res.headers.get("content-disposition") || "";
+      const match = dispo.match(/filename\*?=(?:UTF-8'')?["']?([^\"';]+)["']?/i);
+      const filename = match?.[1] ? decodeURIComponent(match[1]) : file.name;
+
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      toast.success(`開始下載 ${filename}`);
+    } catch (err) {
+      console.error(err);
+      toast.error("下載失敗，請稍後再試");
+    }
   };
   return <div className="min-h-screen bg-gradient-background p-4">
       <div className="max-w-7xl mx-auto">
