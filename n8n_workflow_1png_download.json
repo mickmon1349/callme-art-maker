@@ -1,0 +1,146 @@
+{
+  "name": "1.png文件下載工作流",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "callMeBack",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -800,
+        200
+      ],
+      "id": "webhook-trigger",
+      "name": "接收請求",
+      "webhookId": "callmeback-1png-download"
+    },
+    {
+      "parameters": {
+        "filePath": "C:\\Users\\mickmon\\version_QRcode\\callMe_ver.20.19.4\\qrCodeOriginal\\1.png",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readBinaryFile",
+      "typeVersion": 1,
+      "position": [
+        -400,
+        200
+      ],
+      "id": "read-1png-file",
+      "name": "讀取1.png檔案"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "store-name-assignment",
+              "name": "storeName",
+              "value": "={{ $('接收請求').item.json.body.name || 'default_store' }}",
+              "type": "string"
+            },
+            {
+              "id": "version-assignment", 
+              "name": "version",
+              "value": "={{ $('接收請求').item.json.body.version || 'v1.0' }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -600,
+        200
+      ],
+      "id": "extract-parameters",
+      "name": "提取參數"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"files\": [\n    {\n      \"id\": \"1\",\n      \"name\": \"1.png\",\n      \"url\": \"data:image/png;base64,{{ $binary.data.$base64 }}\",\n      \"thumbnail\": \"data:image/png;base64,{{ $binary.data.$base64 }}\"\n    }\n  ]\n}",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Access-Control-Allow-Origin", 
+                "value": "*"
+              },
+              {
+                "name": "Access-Control-Allow-Methods",
+                "value": "POST, OPTIONS"
+              },
+              {
+                "name": "Access-Control-Allow-Headers",
+                "value": "Content-Type"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        -200,
+        200
+      ],
+      "id": "respond-with-file",
+      "name": "回傳檔案"
+    }
+  ],
+  "connections": {
+    "接收請求": {
+      "main": [
+        [
+          {
+            "node": "提取參數",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "提取參數": {
+      "main": [
+        [
+          {
+            "node": "讀取1.png檔案",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "讀取1.png檔案": {
+      "main": [
+        [
+          {
+            "node": "回傳檔案",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1png-download-v1",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "id": "1PNG_DOWNLOAD_WORKFLOW",
+  "tags": ["文件下載", "1.png", "QR碼"]
+}
