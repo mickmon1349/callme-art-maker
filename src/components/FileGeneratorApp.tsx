@@ -83,7 +83,7 @@ export default function FileGeneratorApp() {
             叫叫我圖形生成系統
           </h1>
           <p className="text-muted-foreground text-lg">
-            輕鬆生成專業的店家圖形檔案
+            立即生成想要的圖檔傳至信箱
           </p>
         </div>
 
@@ -108,69 +108,73 @@ export default function FileGeneratorApp() {
                 />
               </div>
 
-              <div className="space-y-4">
-                <Label className="text-foreground font-medium">版本選擇</Label>
-                <div className="space-y-3">
-                  <div className="flex items-center space-x-2">
-                    <Checkbox 
-                      id="general" 
-                      checked={selectedVersion === "一般版"} 
-                      onCheckedChange={checked => handleVersionChange("一般版", checked as boolean)} 
-                      disabled={isGenerating} 
-                    />
-                    <Label htmlFor="general" className="text-foreground cursor-pointer">
-                      一般版
-                    </Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Checkbox 
-                      id="waiting" 
-                      checked={selectedVersion === "候位版"} 
-                      onCheckedChange={checked => handleVersionChange("候位版", checked as boolean)} 
-                      disabled={isGenerating} 
-                    />
-                    <Label htmlFor="waiting" className="text-foreground cursor-pointer">
-                      候位版
-                    </Label>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* 版本選擇 */}
+                <div className="space-y-4">
+                  <Label className="text-foreground font-medium">版本選擇:</Label>
+                  <div className="space-y-3">
+                    <div className="flex items-center space-x-2">
+                      <Checkbox 
+                        id="general" 
+                        checked={selectedVersion === "一般版"} 
+                        onCheckedChange={checked => handleVersionChange("一般版", checked as boolean)} 
+                        disabled={isGenerating} 
+                      />
+                      <Label htmlFor="general" className="text-foreground cursor-pointer">
+                        一般版
+                      </Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Checkbox 
+                        id="waiting" 
+                        checked={selectedVersion === "候位版"} 
+                        onCheckedChange={checked => handleVersionChange("候位版", checked as boolean)} 
+                        disabled={isGenerating} 
+                      />
+                      <Label htmlFor="waiting" className="text-foreground cursor-pointer">
+                        候位版
+                      </Label>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div className="space-y-4">
-                <Label className="text-foreground font-medium">選項</Label>
-                <div className="space-y-3">
-                  <div className="flex items-center space-x-2">
-                    <Checkbox 
-                      id="a4文宣" 
-                      checked={options.a4文宣} 
-                      onCheckedChange={checked => handleOptionChange("a4文宣", checked as boolean)} 
-                      disabled={isGenerating} 
-                    />
-                    <Label htmlFor="a4文宣" className="text-foreground cursor-pointer">
-                      A4文宣
-                    </Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Checkbox 
-                      id="qrcode" 
-                      checked={options.qrcode} 
-                      onCheckedChange={checked => handleOptionChange("qrcode", checked as boolean)} 
-                      disabled={isGenerating} 
-                    />
-                    <Label htmlFor="qrcode" className="text-foreground cursor-pointer">
-                      Qrcode
-                    </Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Checkbox 
-                      id="立牌卡" 
-                      checked={options.立牌卡} 
-                      onCheckedChange={checked => handleOptionChange("立牌卡", checked as boolean)} 
-                      disabled={isGenerating} 
-                    />
-                    <Label htmlFor="立牌卡" className="text-foreground cursor-pointer">
-                      立牌卡
-                    </Label>
+                {/* 製作項目 */}
+                <div className="space-y-4">
+                  <Label className="text-foreground font-medium">製作項目:</Label>
+                  <div className="space-y-3">
+                    <div className="flex items-center space-x-2">
+                      <Checkbox 
+                        id="a4文宣" 
+                        checked={options.a4文宣} 
+                        onCheckedChange={checked => handleOptionChange("a4文宣", checked as boolean)} 
+                        disabled={isGenerating} 
+                      />
+                      <Label htmlFor="a4文宣" className="text-foreground cursor-pointer">
+                        A4文宣
+                      </Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Checkbox 
+                        id="qrcode" 
+                        checked={options.qrcode} 
+                        onCheckedChange={checked => handleOptionChange("qrcode", checked as boolean)} 
+                        disabled={isGenerating} 
+                      />
+                      <Label htmlFor="qrcode" className="text-foreground cursor-pointer">
+                        Qrcode
+                      </Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Checkbox 
+                        id="立牌卡" 
+                        checked={options.立牌卡} 
+                        onCheckedChange={checked => handleOptionChange("立牌卡", checked as boolean)} 
+                        disabled={isGenerating} 
+                      />
+                      <Label htmlFor="立牌卡" className="text-foreground cursor-pointer">
+                        立牌卡
+                      </Label>
+                    </div>
                   </div>
                 </div>
               </div>
