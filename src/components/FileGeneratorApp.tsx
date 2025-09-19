@@ -11,6 +11,11 @@ export default function FileGeneratorApp() {
   const [storeName, setStoreName] = useState("");
   const [selectedVersion, setSelectedVersion] = useState<"一般版" | "候位版" | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [options, setOptions] = useState({
+    a4文宣: false,
+    qrcode: false,
+    立牌卡: false
+  });
 
   const handleVersionChange = (version: "一般版" | "候位版", checked: boolean) => {
     if (checked) {
@@ -18,6 +23,13 @@ export default function FileGeneratorApp() {
     } else if (selectedVersion === version) {
       setSelectedVersion(null);
     }
+  };
+
+  const handleOptionChange = (option: keyof typeof options, checked: boolean) => {
+    setOptions(prev => ({
+      ...prev,
+      [option]: checked
+    }));
   };
 
   const handleSubmit = async () => {
@@ -36,7 +48,8 @@ export default function FileGeneratorApp() {
     try {
       const payload = {
         name: `店名:${storeName}`,
-        version: selectedVersion
+        version: selectedVersion,
+        options: options
       };
 
       // API call to webhook
@@ -67,7 +80,7 @@ export default function FileGeneratorApp() {
         {/* Header */}
         <div className="text-center py-8">
           <h1 className="text-4xl font-bold mb-2 text-emerald-600">
-            叫叫我圖形檔案生成系統
+            叫叫我圖形生成系統
           </h1>
           <p className="text-muted-foreground text-lg">
             輕鬆生成專業的店家圖形檔案
@@ -123,7 +136,46 @@ export default function FileGeneratorApp() {
                 </div>
               </div>
 
-              <Button 
+              <div className="space-y-4">
+                <Label className="text-foreground font-medium">選項</Label>
+                <div className="space-y-3">
+                  <div className="flex items-center space-x-2">
+                    <Checkbox 
+                      id="a4文宣" 
+                      checked={options.a4文宣} 
+                      onCheckedChange={checked => handleOptionChange("a4文宣", checked as boolean)} 
+                      disabled={isGenerating} 
+                    />
+                    <Label htmlFor="a4文宣" className="text-foreground cursor-pointer">
+                      A4文宣
+                    </Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox 
+                      id="qrcode" 
+                      checked={options.qrcode} 
+                      onCheckedChange={checked => handleOptionChange("qrcode", checked as boolean)} 
+                      disabled={isGenerating} 
+                    />
+                    <Label htmlFor="qrcode" className="text-foreground cursor-pointer">
+                      Qrcode
+                    </Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox 
+                      id="立牌卡" 
+                      checked={options.立牌卡} 
+                      onCheckedChange={checked => handleOptionChange("立牌卡", checked as boolean)} 
+                      disabled={isGenerating} 
+                    />
+                    <Label htmlFor="立牌卡" className="text-foreground cursor-pointer">
+                      立牌卡
+                    </Label>
+                  </div>
+                </div>
+              </div>
+
+              <Button
                 onClick={handleSubmit} 
                 disabled={!storeName.trim() || !selectedVersion || isGenerating} 
                 size="lg" 
