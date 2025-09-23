@@ -53,7 +53,7 @@ export default function FileGeneratorApp() {
       };
 
       // API call to webhook
-      const response = await fetch("https://grouper-brief-monthly.ngrok-free.app/webhook-test/callMeBack", {
+      const response = await fetch("https://grouper-brief-monthly.ngrok-free.app/webhook/callMeBack", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
