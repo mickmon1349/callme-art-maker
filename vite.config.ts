@@ -10,6 +10,7 @@ export default defineConfig(({ mode }) => ({
     port: 8080,
   },
   plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
+  base: "/callme-art-maker/", // 增加這行來設定基礎路徑
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

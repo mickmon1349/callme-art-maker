@@ -44,7 +44,7 @@ export default function FileGeneratorApp() {
     }
 
     setIsGenerating(true);
-    
+
     try {
       const payload = {
         name: `店名:${storeName}`,
@@ -53,7 +53,7 @@ export default function FileGeneratorApp() {
       };
 
       // API call to webhook
-      const response = await fetch("https://grouper-brief-monthly.ngrok-free.app/webhook-test/callMeBack", {
+      const response = await fetch("https://grouper-brief-monthly.ngrok-free.app/webhook/callMeBack", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -98,13 +98,13 @@ export default function FileGeneratorApp() {
                 <Label htmlFor="storeName" className="text-foreground font-medium">
                   請輸入名稱
                 </Label>
-                <Input 
-                  id="storeName" 
-                  value={storeName} 
-                  onChange={e => setStoreName(e.target.value)} 
-                  placeholder="請輸入店家名稱" 
-                  className="bg-input border-input-border focus:ring-ring" 
-                  disabled={isGenerating} 
+                <Input
+                  id="storeName"
+                  value={storeName}
+                  onChange={e => setStoreName(e.target.value)}
+                  placeholder="請輸入店家名稱"
+                  className="bg-input border-input-border focus:ring-ring"
+                  disabled={isGenerating}
                 />
               </div>
 
@@ -114,22 +114,22 @@ export default function FileGeneratorApp() {
                   <Label className="text-foreground font-medium">版本選擇:</Label>
                   <div className="space-y-3">
                     <div className="flex items-center space-x-2">
-                      <Checkbox 
-                        id="general" 
-                        checked={selectedVersion === "一般版"} 
-                        onCheckedChange={checked => handleVersionChange("一般版", checked as boolean)} 
-                        disabled={isGenerating} 
+                      <Checkbox
+                        id="general"
+                        checked={selectedVersion === "一般版"}
+                        onCheckedChange={checked => handleVersionChange("一般版", checked as boolean)}
+                        disabled={isGenerating}
                       />
                       <Label htmlFor="general" className="text-foreground cursor-pointer">
                         一般版
                       </Label>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <Checkbox 
-                        id="waiting" 
-                        checked={selectedVersion === "候位版"} 
-                        onCheckedChange={checked => handleVersionChange("候位版", checked as boolean)} 
-                        disabled={isGenerating} 
+                      <Checkbox
+                        id="waiting"
+                        checked={selectedVersion === "候位版"}
+                        onCheckedChange={checked => handleVersionChange("候位版", checked as boolean)}
+                        disabled={isGenerating}
                       />
                       <Label htmlFor="waiting" className="text-foreground cursor-pointer">
                         候位版
@@ -143,33 +143,33 @@ export default function FileGeneratorApp() {
                   <Label className="text-foreground font-medium">製作項目:</Label>
                   <div className="space-y-3">
                     <div className="flex items-center space-x-2">
-                      <Checkbox 
-                        id="a4文宣" 
-                        checked={options.a4文宣} 
-                        onCheckedChange={checked => handleOptionChange("a4文宣", checked as boolean)} 
-                        disabled={isGenerating} 
+                      <Checkbox
+                        id="a4文宣"
+                        checked={options.a4文宣}
+                        onCheckedChange={checked => handleOptionChange("a4文宣", checked as boolean)}
+                        disabled={isGenerating}
                       />
                       <Label htmlFor="a4文宣" className="text-foreground cursor-pointer">
                         A4文宣
                       </Label>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <Checkbox 
-                        id="qrcode" 
-                        checked={options.qrcode} 
-                        onCheckedChange={checked => handleOptionChange("qrcode", checked as boolean)} 
-                        disabled={isGenerating} 
+                      <Checkbox
+                        id="qrcode"
+                        checked={options.qrcode}
+                        onCheckedChange={checked => handleOptionChange("qrcode", checked as boolean)}
+                        disabled={isGenerating}
                       />
                       <Label htmlFor="qrcode" className="text-foreground cursor-pointer">
                         Qrcode
                       </Label>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <Checkbox 
-                        id="立牌卡" 
-                        checked={options.立牌卡} 
-                        onCheckedChange={checked => handleOptionChange("立牌卡", checked as boolean)} 
-                        disabled={isGenerating} 
+                      <Checkbox
+                        id="立牌卡"
+                        checked={options.立牌卡}
+                        onCheckedChange={checked => handleOptionChange("立牌卡", checked as boolean)}
+                        disabled={isGenerating}
                       />
                       <Label htmlFor="立牌卡" className="text-foreground cursor-pointer">
                         立牌卡
@@ -180,9 +180,9 @@ export default function FileGeneratorApp() {
               </div>
 
               <Button
-                onClick={handleSubmit} 
-                disabled={!storeName.trim() || !selectedVersion || isGenerating} 
-                size="lg" 
+                onClick={handleSubmit}
+                disabled={!storeName.trim() || !selectedVersion || isGenerating}
+                size="lg"
                 className="w-full bg-gradient-primary text-primary-foreground shadow-button font-medium bg-teal-700 hover:bg-teal-600"
               >
                 {isGenerating ? (
