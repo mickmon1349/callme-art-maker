@@ -3,17 +3,19 @@ import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
 
-// https://vitejs.dev/config/
-export default defineConfig(({ mode }) => ({
+export default defineConfig({
+  // 確保 base 屬性正確，且在 defineConfig 的頂層。
+  base: "/callme-art-maker/",
+
   server: {
-    host: "::",
     port: 8080,
   },
-  plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
-  base: "/callme-art-maker/", // 增加這行來設定基礎路徑
+
+  plugins: [react(), componentTagger()],
+
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
   },
-}));
+});
