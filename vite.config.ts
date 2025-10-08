@@ -5,7 +5,7 @@ import { componentTagger } from "lovable-tagger";
 
 export default defineConfig({
   // 確保 base 屬性正確，且在 defineConfig 的頂層。
-  base: "/callme-art-maker/",
+  base: "./",
 
   server: {
     port: 8080,
