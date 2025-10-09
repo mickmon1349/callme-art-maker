@@ -4,12 +4,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
 export default function FileGeneratorApp() {
   const [storeName, setStoreName] = useState("");
-  const [selectedVersion, setSelectedVersion] = useState<"一般版" | "候位版" | null>(null);
+  const [selectedVersion, setSelectedVersion] = useState<"一般版" | "候位版" | "橘角版" | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [options, setOptions] = useState({
     a4文宣: false,
@@ -17,12 +18,8 @@ export default function FileGeneratorApp() {
     立牌卡: false
   });
 
-  const handleVersionChange = (version: "一般版" | "候位版", checked: boolean) => {
-    if (checked) {
-      setSelectedVersion(version);
-    } else if (selectedVersion === version) {
-      setSelectedVersion(null);
-    }
+  const handleVersionChange = (value: string) => {
+    setSelectedVersion(value as "一般版" | "候位版" | "橘角版");
   };
 
   const handleOptionChange = (option: keyof typeof options, checked: boolean) => {
@@ -80,7 +77,7 @@ export default function FileGeneratorApp() {
         {/* Header */}
         <div className="text-center py-8">
           <h1 className="text-4xl font-bold mb-2 text-emerald-600">
-            叫叫我圖形生成系統
+            叫叫我圖檔生成系統
           </h1>
           <p className="text-muted-foreground text-lg">
             立即生成想要的圖檔傳至信箱
@@ -112,30 +109,30 @@ export default function FileGeneratorApp() {
                 {/* 版本選擇 */}
                 <div className="space-y-4">
                   <Label className="text-foreground font-medium">版本選擇:</Label>
-                  <div className="space-y-3">
+                  <RadioGroup
+                    value={selectedVersion || ""}
+                    onValueChange={handleVersionChange}
+                    disabled={isGenerating}
+                  >
                     <div className="flex items-center space-x-2">
-                      <Checkbox
-                        id="general"
-                        checked={selectedVersion === "一般版"}
-                        onCheckedChange={checked => handleVersionChange("一般版", checked as boolean)}
-                        disabled={isGenerating}
-                      />
+                      <RadioGroupItem value="一般版" id="general" />
                       <Label htmlFor="general" className="text-foreground cursor-pointer">
                         一般版
                       </Label>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <Checkbox
-                        id="waiting"
-                        checked={selectedVersion === "候位版"}
-                        onCheckedChange={checked => handleVersionChange("候位版", checked as boolean)}
-                        disabled={isGenerating}
-                      />
+                      <RadioGroupItem value="候位版" id="waiting" />
                       <Label htmlFor="waiting" className="text-foreground cursor-pointer">
                         候位版
                       </Label>
                     </div>
-                  </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="橘角版" id="orange" />
+                      <Label htmlFor="orange" className="text-foreground cursor-pointer">
+                        橘角版
+                      </Label>
+                    </div>
+                  </RadioGroup>
                 </div>
 
                 {/* 製作項目 */}
